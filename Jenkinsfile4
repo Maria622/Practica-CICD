@@ -19,11 +19,11 @@ pipeline {
                 echo "runing test"
             }
         }
-        stage('Archive Artifact') {
-            steps {
-                archiveArtifacts artifacts: 'build/**', fingerprint: true
-            }
-        }
+        //stage('Archive Artifact') {
+          //  steps {
+            //    archiveArtifacts artifacts: 'build/**', fingerprint: true
+            //}
+        //}
     //CD
         stage('Build Docker Image') {
             steps {
