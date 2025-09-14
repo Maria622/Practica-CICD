@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    stages {
+
+     //CI   
+        stage('Clonign repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Maria622/react-GifApp.git'
+            }
+        }
+        stage('Build app') {
+            steps {
+                sh 'yarn'
+                sh 'yarn build'
+            }
+        }
+        stage('runign test'){
+            steps{
+                echo "runing test"
+            }
+        }
+        stage('Archive Artifact') {
+            steps {
+                archiveArtifacts artifacts: 'build/**', fingerprint: true
+            }
+        }
+    //CD
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("mi-react-app:${env.BUILD_NUMBER}")
+                }
+            }
+        }
+        stage('Run Container') {
+            steps {
+                sh 'docker run -d -p 8080:80 --name react-app mi-react-app:${BUILD_NUMBER}'
+            }
+        }
+
+    
+
+    }
+}

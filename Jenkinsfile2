@@ -1,0 +1,35 @@
+
+node
+{   
+   try{
+    stage('Build')
+   {
+    echo "compilando..."
+   }
+   stage('Test'){
+    sh 'mvn test'
+   }
+    stage('Deploy'){
+    echo "desplegado.."
+   }
+   }catch (err) {
+        ansiColor('xterm') {
+        echo "\u001B[31mERROR: ${err}\u001B[0m"
+    }
+    }finally{
+        cleanWs() 
+   }
+
+
+}
+//corregirlo dentro del pipeline
+
+
+// asi funciona un try catch
+try {
+    // Código que podría fallar
+} catch (err) {
+    // Qué hacer si ocurre un error
+} finally {
+    // Código que se ejecuta siempre (haya error o no)
+}

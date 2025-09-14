@@ -1,0 +1,52 @@
+//tercer ejercicio Ejercicio 3 – Pipeline con Parámetros y Branches
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'Despliegue', choices: ['dev', 'qa', 'prod'], description: 'Selecciona el entorno de despliegue')
+    }
+
+    stages {
+        stage('Validar Rama') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master') {
+                        echo "Rama válida: ${env.BRANCH_NAME}"
+                    } else {
+                        error "Este pipeline solo puede ejecutarse en main o master (rama actual: ${env.BRANCH_NAME})"
+                    }
+                }
+            }
+        }
+
+        stage('Despliegue en Desarrollo') {
+            when {
+                expression { params.Despliegue == 'dev' }
+            }
+            steps {
+                echo "Despliegue en desarrollo"
+            }
+        }
+
+        stage('Despliegue en QA') {
+            when {
+                expression { params.Despliegue == 'qa' }
+            }
+            steps {
+                echo "Despliegue en calidad"
+            }
+        }
+
+        stage('Despliegue en Producción') {
+            when {
+                expression { params.Despliegue == 'prod' }
+            }
+            steps {
+                script {
+                    input message: "Confirmar despliegue en PRODUCCIÓN", ok: "Continuar"
+                    echo "Despliegue en producción"
+                }
+            }
+        }
+    }
+}
