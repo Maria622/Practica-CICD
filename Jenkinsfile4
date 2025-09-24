@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build app') {
             steps {
-                sh 'yarn'
+                //sh 'yarn'
                 sh 'yarn build'
             }
         }
