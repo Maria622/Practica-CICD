@@ -1,5 +1,5 @@
 pipeline {
-    agent { node { label 'dev' , 'java' } }
+    agent any
     stages {
 
      //CI   
