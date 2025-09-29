@@ -13,6 +13,7 @@ pipeline {
         stage('Build app') {
             steps {
                 //sh 'yarn'
+                sh 'yarn install --frozen-lockfile'
                 sh 'yarn build'
                 sh 'vite build'
             }
