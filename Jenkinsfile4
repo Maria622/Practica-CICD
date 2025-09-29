@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Archive Artifact') {
             steps {
-                archiveArtifacts artifacts: 'build/**', fingerprint: true
+                archiveArtifacts artifacts: 'dist/**', fingerprint: true
              }
         }
     //CD
